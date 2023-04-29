@@ -8,6 +8,7 @@ class ADFGVX:
         self.code_table = ["A", "D", "F", "G", "V", "X"]
 
     def __generate_code(self, code: str) -> list:
+        # TODO: This is a disgrace! Change it.
         alphabets: list = list(map(str, ascii_lowercase))
 
         extra_letters: list = []
@@ -17,6 +18,8 @@ class ADFGVX:
 
         code_list_with_duplicates: list = list(map(str, code))
         code_list: list = []
+
+        # TODO: Use Dict comprehenssion to order instead. Dicts are always ordered. It's neat! "{x: None for x in unordered_list}"
         [
             code_list.append(letter)
             for letter in code_list_with_duplicates
@@ -24,7 +27,6 @@ class ADFGVX:
         ]
 
         sorted_letters: list = code_list + extra_letters
-
         table_key: list = []
 
         for letter in sorted_letters:
