@@ -9,7 +9,7 @@ from cipher_haven.logic import adfgvx
             "nachtbommenwerper",
             "attack at 1200am",
             "privacy",
-            "ADDDDDADAGVGADDDAFDGVFVFADDX",
+            "DGDD DAGD DGAF ADDF DADV DVFA ADVX",
         )
     ],
 )

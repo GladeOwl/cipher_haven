@@ -50,26 +50,47 @@ class ADFGVX:
             table_row = [self.code_table[y]] + list(self.table[y])
             table.add_row(*table_row)
 
-        console = Console()
-        console.print(table)
+        # console = Console()
+        # console.print(table)
 
     def encrypt(self, message: str, key: str):
-        message_no_spaces = message.replace(" ", "").upper()
+        message_no_spaces: str = message.replace(" ", "").upper()
         letters: list = list(map(str, message_no_spaces))
 
         code_string: str = ""
         for letter in letters:
             index = numpy.argwhere(self.table == letter)
 
-            # TODO: numpy creates a nested list, look into ways to simplifying it.
             row = index[0][0]
             column = index[0][1]
 
             position = self.code_table[row] + self.code_table[column]
             code_string += position
 
-        enciphered_plaintext = [
-            code_string[i : i + len(key)] for i in range(0, len(code_string), len(key))
-        ]
+        # enciphered_plaintext = [
+        #     code_string[x : x + len(key)] for x in range(0, len(code_string), len(key))
+        # ]
 
-        return code_string
+        plaintext_list: list = []
+        for key_letter in key:
+            plaintext_list.append([key_letter])
+
+        key_list_number: int = 0
+        for letter in code_string:
+            plaintext_list[key_list_number].append(letter)
+            key_list_number = (
+                key_list_number + 1 if key_list_number < len(plaintext_list) - 1 else 0
+            )
+
+        plaintext_list.sort()
+        plaintext: str = ""
+        for code_list in plaintext_list:
+            code_list.pop(0)
+            plaintext += "".join(code_list) + " "
+
+        return plaintext.strip()
+
+
+cipher = ADFGVX()
+cipher.generate_table("nachtbommenwerper")
+plaintext = cipher.encrypt("attack at 1200am", "privacy")
