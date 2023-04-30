@@ -65,18 +65,11 @@ class ADFGVX:
             row = index[0][0]
             column = index[0][1]
 
-            position = self.code_table[column] + self.code_table[row]
+            position = self.code_table[row] + self.code_table[column]
             code_string += position
-
-            # print(letter, position)
 
         enciphered_plaintext = [
             code_string[i : i + len(key)] for i in range(0, len(code_string), len(key))
         ]
 
         return code_string
-
-
-cipher = ADFGVX()
-cipher.generate_table("nachtbommenwerper")
-# cipher.encrypt("Honey I shrunk the kids", "NOTTHEBEES")
