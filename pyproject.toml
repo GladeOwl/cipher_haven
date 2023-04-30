@@ -8,6 +8,8 @@ packages = [{include = "cipher_haven"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
+numpy = "^1.24.3"
+typer = {extras = ["all"], version = "^0.7.0"}
 
 
 [tool.poetry.group.dev.dependencies]
