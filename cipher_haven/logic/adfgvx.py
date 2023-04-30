@@ -1,7 +1,7 @@
 import numpy
 from rich.console import Console
-from rich.table import Table
-from string import ascii_lowercase
+from rich.table import Table, box
+from string import ascii_uppercase
 
 
 class ADFGVX:
@@ -10,7 +10,7 @@ class ADFGVX:
         self.code_table = ["A", "D", "F", "G", "V", "X"]
 
     def __generate_code(self, code: str) -> list:
-        alphabets: list = list(ascii_lowercase)
+        alphabets: list = list(ascii_uppercase)
 
         extra_letters: list = []
         for letter in alphabets:
@@ -34,13 +34,13 @@ class ADFGVX:
         return table_key
 
     def generate_table(self, code: str) -> None:
-        table_key = numpy.array(self.__generate_code(code.lower()))
+        table_key = numpy.array(self.__generate_code(code.upper()))
 
         # print(table_key)
         # ADFGVX table has 6 rows and columns
         self.table: numpy.ndarray = table_key.reshape(6, 6)
 
-        table = Table(title="ADFGVX", show_lines=True)
+        table = Table(title="ADFGVX", show_lines=True, box=box.SQUARE)
 
         table.add_column(" ")
         for y in range(len(self.table)):
@@ -54,7 +54,7 @@ class ADFGVX:
         console.print(table)
 
     def encrypt(self, message: str, key: str):
-        message_no_spaces = message.replace(" ", "").lower()
+        message_no_spaces = message.replace(" ", "").upper()
         letters: list = list(map(str, message_no_spaces))
 
         code_string: str = ""
