@@ -7,7 +7,8 @@ from string import ascii_uppercase
 class ADFGVX:
     def __init__(self) -> None:
         self.table = None
-        self.code_table = ["A", "D", "F", "G", "V", "X"]
+        self.code_table = {"A": 0, "D": 1, "F": 2, "G": 3, "V": 4, "X": 5}
+        self.code_table_keys = list(self.code_table.keys())
 
     def __generate_code(self, code: str) -> list:
         alphabets: list = list(ascii_uppercase)
@@ -36,7 +37,6 @@ class ADFGVX:
     def generate_table(self, code: str) -> None:
         table_key = numpy.array(self.__generate_code(code.upper()))
 
-        # print(table_key)
         # ADFGVX table has 6 rows and columns
         self.table: numpy.ndarray = table_key.reshape(6, 6)
 
@@ -44,14 +44,14 @@ class ADFGVX:
 
         table.add_column(" ")
         for y in range(len(self.table)):
-            table.add_column(self.code_table[y])
+            table.add_column(self.code_table_keys[y])
 
         for y in range(len(self.table)):
-            table_row = [self.code_table[y]] + list(self.table[y])
+            table_row = [self.code_table_keys[y]] + list(self.table[y])
             table.add_row(*table_row)
 
-        # console = Console()
-        # console.print(table)
+        console = Console()
+        console.print(table)
 
     def encrypt(self, message: str, transpose_key: str) -> str:
         message_no_spaces: str = message.replace(" ", "").upper()
@@ -64,7 +64,7 @@ class ADFGVX:
             row = index[0][0]
             column = index[0][1]
 
-            position = self.code_table[row] + self.code_table[column]
+            position = self.code_table_keys[row] + self.code_table_keys[column]
             code_string += position
 
         plaintext_list: list = []
@@ -87,7 +87,7 @@ class ADFGVX:
         return plaintext.strip()
 
     def decrypt(self, encrypted_message: str, transpose_key: str) -> str:
-        self.tranpose_key = transpose_key
+        self.tranpose_key: str = transpose_key
 
         sorted_key: list = sorted(list(transpose_key))
 
@@ -119,14 +119,16 @@ class ADFGVX:
                 decrypt_table_index = 0
                 code_list_index += 1
 
-        print(code_string)
+        decrypted_message: str = ""
+        for i in range(0, len(code_string), 2):
+            row: int = self.code_table[code_string[i]]
+            column: int = self.code_table[code_string[i + 1]]
+
+            letter: str = self.table[row, column]
+            decrypted_message += letter
+
+        return decrypted_message.lower()
 
     def __decrypt_sort(self, code_list: list) -> int:
         tranpose_letter = code_list[0]
         return self.tranpose_key.index(tranpose_letter)
-
-
-cipher = ADFGVX()
-cipher.generate_table("nachtbommenwerper")
-# plaintext = cipher.encrypt("attack at 1200am", "privacy")
-plaintext = cipher.decrypt("DGDD DAGD DGAF ADDF DADV DVFA ADVX", "privacy")
