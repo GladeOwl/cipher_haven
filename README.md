@@ -1,7 +1,7 @@
 # Cipher Haven
 
 ---
-An attempted python implementation of all the pre-computer ciphers used throughout ages.
+An attempted python implementation of all the pre-computer ciphers used throughout the ages.
 
 ## Index
 

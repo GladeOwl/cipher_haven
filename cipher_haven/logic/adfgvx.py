@@ -53,7 +53,7 @@ class ADFGVX:
         # console = Console()
         # console.print(table)
 
-    def encrypt(self, message: str, key: str):
+    def encrypt(self, message: str, transpose_key: str) -> str:
         message_no_spaces: str = message.replace(" ", "").upper()
         letters: list = list(map(str, message_no_spaces))
 
@@ -67,19 +67,15 @@ class ADFGVX:
             position = self.code_table[row] + self.code_table[column]
             code_string += position
 
-        # enciphered_plaintext = [
-        #     code_string[x : x + len(key)] for x in range(0, len(code_string), len(key))
-        # ]
-
         plaintext_list: list = []
-        for key_letter in key:
+        for key_letter in transpose_key:
             plaintext_list.append([key_letter])
 
-        key_list_number: int = 0
+        key_list_index: int = 0
         for letter in code_string:
-            plaintext_list[key_list_number].append(letter)
-            key_list_number = (
-                key_list_number + 1 if key_list_number < len(plaintext_list) - 1 else 0
+            plaintext_list[key_list_index].append(letter)
+            key_list_index = (
+                key_list_index + 1 if key_list_index < len(plaintext_list) - 1 else 0
             )
 
         plaintext_list.sort()
@@ -90,7 +86,47 @@ class ADFGVX:
 
         return plaintext.strip()
 
+    def decrypt(self, encrypted_message: str, transpose_key: str) -> str:
+        self.tranpose_key = transpose_key
+
+        sorted_key: list = sorted(list(transpose_key))
+
+        decrypt_table: list = []
+        for key_letter in sorted_key:
+            decrypt_table.append([key_letter])
+
+        encrypted_message_list = encrypted_message.split(" ")
+        for x in range(len(encrypted_message_list)):
+            message_string_list = list(encrypted_message_list[x])
+            decrypt_table[x] += message_string_list
+
+        decrypt_table.sort(key=self.__decrypt_sort)
+
+        for code_list in decrypt_table:
+            code_list.pop(0)
+
+        code_list_index: int = 0
+        decrypt_table_index: int = 0
+        code_string: str = ""
+        # TODO: This will break with uneven number of letters.
+        for x in range(len(decrypt_table) * len(decrypt_table[0])):
+            code_list = decrypt_table[decrypt_table_index]
+            code_string += code_list[code_list_index]
+
+            if decrypt_table_index + 1 < len(decrypt_table):
+                decrypt_table_index += 1
+            else:
+                decrypt_table_index = 0
+                code_list_index += 1
+
+        print(code_string)
+
+    def __decrypt_sort(self, code_list: list) -> int:
+        tranpose_letter = code_list[0]
+        return self.tranpose_key.index(tranpose_letter)
+
 
 cipher = ADFGVX()
 cipher.generate_table("nachtbommenwerper")
-plaintext = cipher.encrypt("attack at 1200am", "privacy")
+# plaintext = cipher.encrypt("attack at 1200am", "privacy")
+plaintext = cipher.decrypt("DGDD DAGD DGAF ADDF DADV DVFA ADVX", "privacy")
