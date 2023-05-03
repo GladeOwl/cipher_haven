@@ -37,7 +37,6 @@ class ADFGVX:
     def generate_table(self, code: str) -> None:
         table_key = numpy.array(self.__generate_code(code.upper()))
 
-        # print(table_key)
         # ADFGVX table has 6 rows and columns
         self.table: numpy.ndarray = table_key.reshape(6, 6)
 
@@ -88,7 +87,7 @@ class ADFGVX:
         return plaintext.strip()
 
     def decrypt(self, encrypted_message: str, transpose_key: str) -> str:
-        self.tranpose_key = transpose_key
+        self.tranpose_key: str = transpose_key
 
         sorted_key: list = sorted(list(transpose_key))
 
@@ -133,9 +132,3 @@ class ADFGVX:
     def __decrypt_sort(self, code_list: list) -> int:
         tranpose_letter = code_list[0]
         return self.tranpose_key.index(tranpose_letter)
-
-
-cipher = ADFGVX()
-cipher.generate_table("nachtbommenwerper")
-# plaintext = cipher.encrypt("attack at 1200am", "privacy")
-plaintext = cipher.decrypt("DGDD DAGD DGAF ADDF DADV DVFA ADVX", "privacy")
