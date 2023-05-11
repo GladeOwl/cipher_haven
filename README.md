@@ -7,3 +7,4 @@ An attempted python implementation of all the pre-computer ciphers used througho
 
 1. ADFGVX [:link:](https://en.wikipedia.org/wiki/ADFGVX_cipher)
 2. Affine [:link:](https://en.wikipedia.org/wiki/Affine_cipher)
+3. Alberti [:link:](https://en.wikipedia.org/wiki/Alberti_cipher)
