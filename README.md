@@ -6,3 +6,4 @@ An attempted python implementation of all the pre-computer ciphers used througho
 ## Index
 
 1. ADFGVX [:link:](https://en.wikipedia.org/wiki/ADFGVX_cipher)
+2. Affine [:link:](https://en.wikipedia.org/wiki/Affine_cipher)
