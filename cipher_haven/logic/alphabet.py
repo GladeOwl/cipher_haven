@@ -41,3 +41,31 @@ class ALPHABET:
         console.print(table_print)
 
         return True
+
+    def encrypt(self, message: str, keyword: str) -> str:
+        plaintext: str = message.upper().replace(" ", "")
+
+        keyword_list: list = []
+        keyword_index: int = 0
+        for _ in range(len(plaintext)):
+            keyword_list.append(keyword[keyword_index].upper())
+            keyword_index = keyword_index + 1 if keyword_index < len(keyword) - 1 else 0
+
+        print(keyword_list)
+
+        encrypted_message: str = ""
+        for i in range(len(plaintext)):
+            l: str = plaintext[i]
+
+            row: int = ascii_uppercase.index(keyword_list[i])
+            column: int = ascii_uppercase.index(l)
+
+            letter: str = self.table[row, column]
+
+            encrypted_message += letter
+
+        return encrypted_message
+
+
+al = ALPHABET()
+print(al.encrypt("meet me on Tuesday evening at seven", "vigilance"))
