@@ -28,7 +28,7 @@ def test_encrypt(message: str, keyword: str, expected_output: str):
         (
             "hmkbxebpxpmyllyrxiiqtoltfgzzv",
             "vigilance",
-            "meetmeontuesdayeveningatseven",
+            "MEETMEONTUESDAYEVENINGATSEVEN",
         )
     ],
 )
