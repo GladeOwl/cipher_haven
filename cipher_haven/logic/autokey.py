@@ -64,3 +64,18 @@ class AUTOKEY:
             encrypted_letter: str = self.table[row, column]
             encrypted_message += encrypted_letter
         return encrypted_message
+
+    def decrypt(self, encrypted_message: str, key: str) -> str:
+        """Decrypt the Message using the Autokey Cipher"""
+        decrypted_message: str = ""
+        for i, letter in enumerate(encrypted_message):
+            keyletter: str = key[i].upper()
+
+            row: int = ascii_uppercase.index(keyletter)
+            column: int = list(self.table[row]).index(letter)
+
+            decrypted_letter = ascii_uppercase[column]
+            key += decrypted_letter
+            decrypted_message += decrypted_letter
+
+        return decrypted_message
