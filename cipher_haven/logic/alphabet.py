@@ -1,4 +1,4 @@
-""" Alphabet Cipher """
+"""Alphabet Cipher"""
 
 from copy import deepcopy
 from string import ascii_lowercase, ascii_uppercase
@@ -17,7 +17,6 @@ class ALPHABET:
 
     def __generate_table(self) -> None:
         ascii_table = list(ascii_lowercase)
-
         table_lists: list = []
 
         for _ in ascii_table:
@@ -38,7 +37,6 @@ class ALPHABET:
             return False
 
         table_print = Table(title="Alphabet", show_lines=True, box=box.SQUARE)
-
         table_print.add_column(" ")
 
         for i, _ in enumerate(self.table):
@@ -80,11 +78,11 @@ class ALPHABET:
     def decrypt(self, encrypted_message: str, keyword: str) -> str:
         """Decrypt the Encrypted Message using the Alphabet Cipher"""
 
-        encrypted_message = encrypted_message.upper().replace(" ", "")
-        self.__prepare_keyword(encrypted_message, keyword)
+        encrypted_text = encrypted_message.upper().replace(" ", "")
+        self.__prepare_keyword(encrypted_text, keyword)
 
         decrypted_message: str = ""
-        for i, letter in enumerate(encrypted_message):
+        for i, letter in enumerate(encrypted_text):
             keyletter: str = self.keyword_list[i]
 
             row: int = ascii_uppercase.index(keyletter)
