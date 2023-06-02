@@ -1,3 +1,5 @@
+""" ADFGVX Cipher Test Module """
+
 import pytest
 from cipher_haven.logic import adfgvx
 
@@ -16,9 +18,11 @@ from cipher_haven.logic import adfgvx
 def test_encrypt(
     table_code: str, message: str, transpose_key: str, expected_output: str
 ):
-    cipher = adfgvx.ADFGVX()
+    """Test the ADFGVX Cipher Class encrypt function"""
+
+    cipher = adfgvx.ADFGVX(transpose_key)
     cipher.generate_table(table_code)
-    encrypted_message = cipher.encrypt(message, transpose_key)
+    encrypted_message = cipher.encrypt(message)
     assert encrypted_message == expected_output
 
 
@@ -36,7 +40,9 @@ def test_encrypt(
 def test_decrypt(
     table_code: str, encryped_message: str, transpose_key: str, expected_output: str
 ):
-    cipher = adfgvx.ADFGVX()
+    """Test the ADFGVX Cipher Class decrypt function"""
+
+    cipher = adfgvx.ADFGVX(transpose_key)
     cipher.generate_table(table_code)
-    decrypted_message = cipher.decrypt(encryped_message, transpose_key)
+    decrypted_message = cipher.decrypt(encryped_message)
     assert decrypted_message == expected_output
