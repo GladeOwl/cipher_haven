@@ -34,7 +34,6 @@ class AUTOKEY:
             return False
 
         table_print = Table(title="Autokey", show_lines=True, box=box.SQUARE)
-
         table_print.add_column(" ")
 
         for i, _ in enumerate(self.table):
@@ -51,6 +50,7 @@ class AUTOKEY:
 
     def encrypt(self, message: str, key: str) -> str:
         """Encrypt the Message using the Autokey Cipher"""
+
         plaintext: str = message.upper().replace(" ", "")
         plainkey: str = key.upper() + plaintext
 
@@ -67,6 +67,7 @@ class AUTOKEY:
 
     def decrypt(self, encrypted_message: str, key: str) -> str:
         """Decrypt the Message using the Autokey Cipher"""
+
         decrypted_message: str = ""
         for i, letter in enumerate(encrypted_message):
             keyletter: str = key[i].upper()

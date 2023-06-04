@@ -1,14 +1,20 @@
-import numpy
+"""ADFGVX Cipher"""
+
+from string import ascii_uppercase
 from rich.console import Console
 from rich.table import Table, box
-from string import ascii_uppercase
+import numpy
+
+CODE_TABLE: dict = {"A": 0, "D": 1, "F": 2, "G": 3, "V": 4, "X": 5}
 
 
 class ADFGVX:
-    def __init__(self) -> None:
-        self.table = None
-        self.code_table = {"A": 0, "D": 1, "F": 2, "G": 3, "V": 4, "X": 5}
-        self.code_table_keys = list(self.code_table.keys())
+    """ADFGVX Cipher Class"""
+
+    def __init__(self, transpose_key: str) -> None:
+        self.table: Table = None
+        self.code_table_keys: list = list(CODE_TABLE.keys())
+        self.transpose_key: str = transpose_key
 
     def __generate_code(self, code: str) -> list:
         alphabets: list = list(ascii_uppercase)
@@ -35,6 +41,7 @@ class ADFGVX:
         return table_key
 
     def generate_table(self, code: str) -> None:
+        """Generate Table for the Affine Cipher"""
         table_key = numpy.array(self.__generate_code(code.upper()))
 
         # ADFGVX table has 6 rows and columns
@@ -43,17 +50,19 @@ class ADFGVX:
         table = Table(title="ADFGVX", show_lines=True, box=box.SQUARE)
 
         table.add_column(" ")
-        for y in range(len(self.table)):
-            table.add_column(self.code_table_keys[y])
+        for i in range(len(self.table)):
+            table.add_column(self.code_table_keys[i])
 
-        for y in range(len(self.table)):
-            table_row = [self.code_table_keys[y]] + list(self.table[y])
+        for i, _ in enumerate(self.table):
+            table_row = [self.code_table_keys[i]] + list(self.table[i])
             table.add_row(*table_row)
 
         console = Console()
         console.print(table)
 
-    def encrypt(self, message: str, transpose_key: str) -> str:
+    def encrypt(self, message: str) -> str:
+        """Encrypt the Message using the ADFGVX Cipher"""
+
         message_no_spaces: str = message.replace(" ", "").upper()
         letters: list = list(map(str, message_no_spaces))
 
@@ -68,7 +77,7 @@ class ADFGVX:
             code_string += position
 
         plaintext_list: list = []
-        for key_letter in transpose_key:
+        for key_letter in self.transpose_key:
             plaintext_list.append([key_letter])
 
         key_list_index: int = 0
@@ -86,19 +95,19 @@ class ADFGVX:
 
         return plaintext.strip()
 
-    def decrypt(self, encrypted_message: str, transpose_key: str) -> str:
-        self.tranpose_key: str = transpose_key
+    def decrypt(self, encrypted_message: str) -> str:
+        """Decrypt the Encrypted Message using the ADFGVX Cipher"""
 
-        sorted_key: list = sorted(list(transpose_key))
+        sorted_key: list = sorted(list(self.transpose_key))
 
         decrypt_table: list = []
         for key_letter in sorted_key:
             decrypt_table.append([key_letter])
 
         encrypted_message_list = encrypted_message.split(" ")
-        for x in range(len(encrypted_message_list)):
-            message_string_list = list(encrypted_message_list[x])
-            decrypt_table[x] += message_string_list
+        for i, _ in enumerate(encrypted_message_list):
+            message_string_list = list(encrypted_message_list[i])
+            decrypt_table[i] += message_string_list
 
         decrypt_table.sort(key=self.__decrypt_sort)
 
@@ -108,8 +117,9 @@ class ADFGVX:
         code_list_index: int = 0
         decrypt_table_index: int = 0
         code_string: str = ""
+
         # TODO: This will break with uneven number of letters.
-        for x in range(len(decrypt_table) * len(decrypt_table[0])):
+        for i in range(len(decrypt_table) * len(decrypt_table[0])):
             code_list = decrypt_table[decrypt_table_index]
             code_string += code_list[code_list_index]
 
@@ -121,8 +131,8 @@ class ADFGVX:
 
         decrypted_message: str = ""
         for i in range(0, len(code_string), 2):
-            row: int = self.code_table[code_string[i]]
-            column: int = self.code_table[code_string[i + 1]]
+            row: int = CODE_TABLE[code_string[i]]
+            column: int = CODE_TABLE[code_string[i + 1]]
 
             letter: str = self.table[row, column]
             decrypted_message += letter
@@ -131,4 +141,4 @@ class ADFGVX:
 
     def __decrypt_sort(self, code_list: list) -> int:
         tranpose_letter = code_list[0]
-        return self.tranpose_key.index(tranpose_letter)
+        return self.transpose_key.index(tranpose_letter)
