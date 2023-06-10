@@ -11,3 +11,4 @@ An attempted python implementation of all the pre-computer ciphers used througho
 4. Atbash [:link:](https://en.wikipedia.org/wiki/Atbash)
 5. Autokey [:link:](https://en.wikipedia.org/wiki/Autokey_cipher)
 6. Bacon [:link:](https://en.wikipedia.org/wiki/Bacon%27s_cipher)
+7. Beaufort [:link:](https://en.wikipedia.org/wiki/Beaufort_cipher)
