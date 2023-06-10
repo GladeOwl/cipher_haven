@@ -1,18 +1,15 @@
 """ Beaufort Cipher """
 
 from string import ascii_uppercase
+import itertools
 
 
 class BEAUFORT:
     """Beaufort Cipher Class"""
 
     def __extend_key(self, message: str, key: str) -> str:
-        # TODO: Looks a bit weird. Can we change it?
-        return (
-            (key.upper() * (len(message) - len(key)))[: len(message)]
-            if len(key) < len(message)
-            else key.upper()
-        )
+        keys: itertools.cycle = itertools.cycle(list(key.upper()))
+        return "".join(next(keys) for _, _ in enumerate(message))
 
     def __process_cipher(self, message: str, key: str) -> list:
         cipher_values: list = []
