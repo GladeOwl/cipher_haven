@@ -9,9 +9,6 @@ ALPHABETS_REVERSED: list = list(reversed(ALPHABETS))
 class ATBASH:
     """Atbash Cipher Class"""
 
-    def __init__(self) -> None:
-        """No setup is required for this one."""  # TODO. Can we remove this?
-
     def encrypt(self, message: str) -> str:
         """Encrypt the Message using the Atbash Cipher"""
 
