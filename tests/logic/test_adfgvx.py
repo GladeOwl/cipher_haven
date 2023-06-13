@@ -32,7 +32,7 @@ def test_encrypt(
             "nachtbommenwerper",
             "DGDD DAGD DGAF ADDF DADV DVFA ADVX",
             "privacy",
-            "attackat1200am",
+            "ATTACKAT1200AM",
         )
     ],
 )

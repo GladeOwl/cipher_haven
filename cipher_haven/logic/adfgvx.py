@@ -3,13 +3,13 @@
 from string import ascii_uppercase
 from rich.console import Console
 from rich.table import Table, box
-from itertools import cycle
 import numpy
+from cipher_haven.logic.cipher import CIPHER
 
 CODE_TABLE: dict = {"A": 0, "D": 1, "F": 2, "G": 3, "V": 4, "X": 5}
 
 
-class ADFGVX:
+class ADFGVX(CIPHER):
     """ADFGVX Cipher Class"""
 
     def __init__(self, transpose_key: str, table_code: str) -> None:
@@ -127,7 +127,7 @@ class ADFGVX:
             letter: str = self.table[row, column]
             decrypted_message += letter
 
-        return decrypted_message.lower()
+        return decrypted_message
 
     def __decrypt_sort(self, code_list: list) -> int:
         tranpose_letter = code_list[0]
