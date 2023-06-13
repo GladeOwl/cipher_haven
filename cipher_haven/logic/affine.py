@@ -1,12 +1,13 @@
 """Affine Cipher"""
 
 from string import ascii_uppercase
+from cipher_haven.logic.cipher import CIPHER
 
 NUMBER_OF_ALPHABETS: int = 26
 CO_PRIME: list = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25]
 
 
-class AFFINE:
+class AFFINE(CIPHER):
     """Affine Cipher Class"""
 
     def __init__(self, alpha: int = 5, beta: int = 8) -> None:
@@ -41,13 +42,13 @@ class AFFINE:
                 return index
         return -1
 
-    def decrypt(self, encryped_message: str) -> str:
+    def decrypt(self, encrypted_message: str) -> str:
         """Decrypt the Encrypted Message using the Affine Cipher"""
 
         a_inverse: int = self.__find_modulor_multiplicative_inverse()
         decrypted_message: str = ""
 
-        for letter in encryped_message:
+        for letter in encrypted_message:
             letter_index: int = ascii_uppercase.index(letter)
             letter_key: int = (
                 a_inverse * (letter_index - self.beta) % NUMBER_OF_ALPHABETS
