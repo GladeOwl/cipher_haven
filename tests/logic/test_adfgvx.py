@@ -20,8 +20,7 @@ def test_encrypt(
 ):
     """Test the ADFGVX Cipher Class encrypt function"""
 
-    cipher = adfgvx.ADFGVX(transpose_key)
-    cipher.generate_table(table_code)
+    cipher = adfgvx.ADFGVX(transpose_key, table_code)
     encrypted_message = cipher.encrypt(message)
     assert encrypted_message == expected_output
 
@@ -42,7 +41,6 @@ def test_decrypt(
 ):
     """Test the ADFGVX Cipher Class decrypt function"""
 
-    cipher = adfgvx.ADFGVX(transpose_key)
-    cipher.generate_table(table_code)
+    cipher = adfgvx.ADFGVX(transpose_key, table_code)
     decrypted_message = cipher.decrypt(encryped_message)
     assert decrypted_message == expected_output
