@@ -2,7 +2,7 @@
 
 from typer import Typer, Argument, Option
 from rich.console import Console
-import cipher_haven.logic as logic
+from cipher_haven import logic
 
 
 app = Typer()
