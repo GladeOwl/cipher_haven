@@ -160,3 +160,5 @@ cython_debug/
 #.idea/
 
 test.py
+cipher_haven/logic/__pycache__/
+tests/logic/__pycache__/
