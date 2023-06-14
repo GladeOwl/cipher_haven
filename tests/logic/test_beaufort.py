@@ -11,8 +11,8 @@ from cipher_haven.logic import beaufort
 def test_encrypt(message: str, key: str, expected_output: str):
     """Test the Beaufort Cipher Class encrypt function"""
 
-    cipher = beaufort.BEAUFORT()
-    encrypted_message = cipher.encrypt(message, key)
+    cipher = beaufort.BEAUFORT(key)
+    encrypted_message = cipher.encrypt(message)
     assert encrypted_message == expected_output
 
 
@@ -23,6 +23,6 @@ def test_encrypt(message: str, key: str, expected_output: str):
 def test_decrypt(encryped_message: str, key: str, expected_output: str):
     """Test the Beaufort Cipher Class encrypt function"""
 
-    cipher = beaufort.BEAUFORT()
-    encrypted_message = cipher.decrypt(encryped_message, key)
+    cipher = beaufort.BEAUFORT(key)
+    encrypted_message = cipher.decrypt(encryped_message)
     assert encrypted_message == expected_output
