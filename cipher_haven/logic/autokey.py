@@ -12,6 +12,7 @@ class AUTOKEY(CIPHER):
     """Autokey Cipher Class"""
 
     def __init__(self, key: str) -> None:
+        self.table: numpy.ndarray = None
         self.key: str = key.upper()
         self.__generate_table()
 
@@ -20,12 +21,12 @@ class AUTOKEY(CIPHER):
         table_lists: list = []
 
         for _ in ascii_uppercase:
-            table_lists += ascii_table[:]
+            table_lists += ascii_table
             first_letter: str = ascii_table.pop(0)
             ascii_table.append(first_letter)
 
         table_array: numpy.array = numpy.array(table_lists)
-        self.table: numpy.ndarray = table_array.reshape(26, 26)
+        self.table = table_array.reshape(26, 26)
 
     def print_table(self) -> bool:
         """Prints the full Alphabet table"""
@@ -39,8 +40,8 @@ class AUTOKEY(CIPHER):
         for i, _ in enumerate(self.table):
             table_print.add_column(ascii_uppercase[i])
 
-        for i, _ in enumerate(self.table):
-            table_row = [ascii_uppercase[i]] + list(self.table[i])
+        for i, row in enumerate(self.table):
+            table_row = [ascii_uppercase[i]] + list(row)
             table_print.add_row(*table_row)
 
         console = Console()
