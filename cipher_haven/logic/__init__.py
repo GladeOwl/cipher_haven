@@ -8,4 +8,5 @@ from cipher_haven.logic import (
     autokey,
     bacon,
     beaufort,
+    bifid,
 )
