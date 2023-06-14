@@ -1,6 +1,7 @@
 """ADFGVX Cipher"""
 
 from string import ascii_uppercase
+from itertools import zip_longest
 from rich.console import Console
 from rich.table import Table, box
 import numpy
@@ -71,8 +72,10 @@ class ADFGVX(CIPHER):
             row = index[0][0]
             column = index[0][1]
 
-            position = self.code_table_keys[row] + self.code_table_keys[column]
-            code_string += position
+            letter_at_position = (
+                self.code_table_keys[row] + self.code_table_keys[column]
+            )
+            code_string += letter_at_position
 
         plaintext_list: list = [[x] for x in self.transpose_key]
 
@@ -101,23 +104,9 @@ class ADFGVX(CIPHER):
         for code_list in decrypt_table:
             code_list.pop(0)
 
-        code_list_index: int = 0
-        decrypt_table_index: int = 0
         code_string: str = ""
-
-        for i in range(sum(map(len, decrypt_table))):
-            code_list = decrypt_table[decrypt_table_index]
-
-            if code_list_index > len(code_list) - 1:
-                continue
-
-            code_string += code_list[code_list_index]
-
-            if decrypt_table_index + 1 < len(decrypt_table):
-                decrypt_table_index += 1
-            else:
-                decrypt_table_index = 0
-                code_list_index += 1
+        for letters in zip_longest(*decrypt_table):
+            code_string += "".join(x for x in letters if x is not None)
 
         decrypted_message: str = ""
         for i in range(0, len(code_string), 2):
