@@ -1,32 +1,31 @@
 """Alphabet Cipher"""
 
-from copy import deepcopy
 from string import ascii_lowercase, ascii_uppercase
 from rich.console import Console
 from rich.table import Table, box
 import numpy
+from cipher_haven.logic.cipher import CIPHER
 
 
-class ALPHABET:
+class ALPHABET(CIPHER):
     """Alphabet Cipher Class"""
 
-    def __init__(self) -> None:
+    def __init__(self, keyword: str) -> None:
         self.table: numpy.ndarray = None
         self.keyword_list: list = []
+        self.keyword: str = keyword
         self.__generate_table()
 
     def __generate_table(self) -> None:
         ascii_table = list(ascii_lowercase)
         table_lists: list = []
 
-        for _ in ascii_table:
-            localtable: list = deepcopy(ascii_table)
-            table_lists += localtable
-
+        for _ in ascii_lowercase:
+            table_lists += ascii_table
             first_letter: str = ascii_table.pop(0)
             ascii_table.append(first_letter)
 
-        table_array = numpy.array(table_lists)
+        table_array: numpy.array = numpy.array(table_lists)
 
         self.table = table_array.reshape(26, 26)
 
@@ -42,8 +41,8 @@ class ALPHABET:
         for i, _ in enumerate(self.table):
             table_print.add_column(ascii_uppercase[i])
 
-        for i, _ in enumerate(self.table):
-            table_row = [ascii_uppercase[i]] + list(self.table[i])
+        for i, row in enumerate(self.table):
+            table_row = [ascii_uppercase[i]] + list(row)
             table_print.add_row(*table_row)
 
         console = Console()
@@ -54,18 +53,17 @@ class ALPHABET:
     def __prepare_keyword(self, message_string: str, keyword: str) -> None:
         keyword_index: int = 0
 
-        for _ in range(len(message_string)):
+        for _ in message_string:
             self.keyword_list.append(keyword[keyword_index].upper())
             keyword_index = keyword_index + 1 if keyword_index < len(keyword) - 1 else 0
 
-    def encrypt(self, message: str, keyword: str) -> str:
+    def encrypt(self, message: str) -> str:
         """Encrypt the Message using the Alphabet Cipher"""
 
         plaintext: str = message.upper().replace(" ", "")
-        self.__prepare_keyword(plaintext, keyword)
+        self.__prepare_keyword(plaintext, self.keyword)
 
         encrypted_message: str = ""
-
         for i, message_letter in enumerate(plaintext):
             row: int = ascii_uppercase.index(self.keyword_list[i])
             column: int = ascii_uppercase.index(message_letter)
@@ -75,11 +73,11 @@ class ALPHABET:
 
         return encrypted_message
 
-    def decrypt(self, encrypted_message: str, keyword: str) -> str:
+    def decrypt(self, encrypted_message: str) -> str:
         """Decrypt the Encrypted Message using the Alphabet Cipher"""
 
-        encrypted_text = encrypted_message.upper().replace(" ", "")
-        self.__prepare_keyword(encrypted_text, keyword)
+        encrypted_text: str = encrypted_message.upper().replace(" ", "")
+        self.__prepare_keyword(encrypted_text, self.keyword)
 
         decrypted_message: str = ""
         for i, letter in enumerate(encrypted_text):

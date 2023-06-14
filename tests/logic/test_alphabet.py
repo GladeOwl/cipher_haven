@@ -17,8 +17,8 @@ from cipher_haven.logic import alphabet
 def test_encrypt(message: str, keyword: str, expected_output: str):
     """Test the Alphabet Cipher Class encrypt function"""
 
-    cipher = alphabet.ALPHABET()
-    encrypted_message = cipher.encrypt(message, keyword)
+    cipher = alphabet.ALPHABET(keyword)
+    encrypted_message = cipher.encrypt(message)
     assert encrypted_message == expected_output
 
 
@@ -35,6 +35,6 @@ def test_encrypt(message: str, keyword: str, expected_output: str):
 def test_decrypt(encrypted_message: str, keyword: str, expected_output: str):
     """Test the Alphabet Cipher Class decrypt function"""
 
-    cipher = alphabet.ALPHABET()
-    decrypted_message = cipher.decrypt(encrypted_message, keyword)
+    cipher = alphabet.ALPHABET(keyword)
+    decrypted_message = cipher.decrypt(encrypted_message)
     assert decrypted_message == expected_output
