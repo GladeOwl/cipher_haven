@@ -1,6 +1,5 @@
 """ Autokey Cipher """
 
-from copy import deepcopy
 from string import ascii_uppercase
 from rich.console import Console
 from rich.table import Table, box
