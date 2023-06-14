@@ -12,3 +12,4 @@ An attempted python implementation of all the pre-computer ciphers used througho
 5. Autokey [:link:](https://en.wikipedia.org/wiki/Autokey_cipher)
 6. Bacon [:link:](https://en.wikipedia.org/wiki/Bacon%27s_cipher)
 7. Beaufort [:link:](https://en.wikipedia.org/wiki/Beaufort_cipher)
+8. Bifid [:link:](https://en.wikipedia.org/wiki/Bifid_cipher)
