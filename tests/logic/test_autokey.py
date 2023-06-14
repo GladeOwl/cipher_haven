@@ -14,8 +14,8 @@ from cipher_haven.logic import autokey
 def test_encrypt(message: str, key: str, expected_output: str):
     """Test the Autokey Cipher Class encrypt function"""
 
-    cipher = autokey.AUTOKEY()
-    encrypted_message = cipher.encrypt(message, key)
+    cipher = autokey.AUTOKEY(key)
+    encrypted_message = cipher.encrypt(message)
     assert encrypted_message == expected_output
 
 
@@ -29,6 +29,6 @@ def test_encrypt(message: str, key: str, expected_output: str):
 def test_decrypt(encrypted_message: str, key: str, expected_output: str):
     """Test the Autokey Cipher Class decrypt function"""
 
-    cipher = autokey.AUTOKEY()
-    encrypted_message = cipher.decrypt(encrypted_message, key)
+    cipher = autokey.AUTOKEY(key)
+    encrypted_message = cipher.decrypt(encrypted_message)
     assert encrypted_message == expected_output

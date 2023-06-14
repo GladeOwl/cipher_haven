@@ -5,27 +5,27 @@ from string import ascii_uppercase
 from rich.console import Console
 from rich.table import Table, box
 import numpy
+from cipher_haven.logic.cipher import CIPHER
 
 
-class AUTOKEY:
+class AUTOKEY(CIPHER):
     """Autokey Cipher Class"""
 
-    def __init__(self) -> None:
+    def __init__(self, key: str) -> None:
+        self.key: str = key.upper()
         self.__generate_table()
 
     def __generate_table(self) -> None:
         ascii_table = list(ascii_uppercase)
         table_lists: list = []
 
-        for _ in ascii_table:
-            localtable: list = deepcopy(ascii_table)
-            table_lists += localtable
-
+        for _ in ascii_uppercase:
+            table_lists += ascii_table[:]
             first_letter: str = ascii_table.pop(0)
             ascii_table.append(first_letter)
 
-        table_array = numpy.array(table_lists)
-        self.table = table_array.reshape(26, 26)
+        table_array: numpy.array = numpy.array(table_lists)
+        self.table: numpy.ndarray = table_array.reshape(26, 26)
 
     def print_table(self) -> bool:
         """Prints the full Alphabet table"""
@@ -48,11 +48,11 @@ class AUTOKEY:
 
         return True
 
-    def encrypt(self, message: str, key: str) -> str:
+    def encrypt(self, message: str) -> str:
         """Encrypt the Message using the Autokey Cipher"""
 
         plaintext: str = message.upper().replace(" ", "")
-        plainkey: str = key.upper() + plaintext
+        plainkey: str = self.key + plaintext
 
         encrypted_message: str = ""
         for i, letter in enumerate(plaintext):
@@ -63,20 +63,21 @@ class AUTOKEY:
 
             encrypted_letter: str = self.table[row, column]
             encrypted_message += encrypted_letter
+
         return encrypted_message
 
-    def decrypt(self, encrypted_message: str, key: str) -> str:
+    def decrypt(self, encrypted_message: str) -> str:
         """Decrypt the Message using the Autokey Cipher"""
 
         decrypted_message: str = ""
         for i, letter in enumerate(encrypted_message):
-            keyletter: str = key[i].upper()
+            keyletter: str = self.key[i]
 
             row: int = ascii_uppercase.index(keyletter)
             column: int = list(self.table[row]).index(letter)
 
             decrypted_letter = ascii_uppercase[column]
-            key += decrypted_letter
+            self.key += decrypted_letter
             decrypted_message += decrypted_letter
 
         return decrypted_message
