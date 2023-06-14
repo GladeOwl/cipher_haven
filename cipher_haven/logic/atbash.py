@@ -1,12 +1,14 @@
 """ Atbash Cipher """
 
 from string import ascii_uppercase
+from cipher_haven.logic.cipher import CIPHER
+
 
 ALPHABETS: list = list(ascii_uppercase)
 ALPHABETS_REVERSED: list = list(reversed(ALPHABETS))
 
 
-class ATBASH:
+class ATBASH(CIPHER):
     """Atbash Cipher Class"""
 
     def encrypt(self, message: str) -> str:
