@@ -112,5 +112,21 @@ def beaufort(
     print_output(cipher, message, encrypt)
 
 
+@app.command()
+def bifid(
+    message: str = Argument(..., help=MESSAGE_HELP_TEXT),
+    table_code: str = Argument(..., help="Single Word with No Numbers. e.g. wonderful"),
+    block_size: int = Argument(
+        ...,
+        help="Block Size, less than the total message length for best results",
+    ),
+    encrypt: bool = Option(True, ENCRYPT_BOOL, help=ENCRYPT_HELP_TEXT),
+):
+    """Encrypt or Decrypt message using the Bifid Cipher"""
+
+    cipher = logic.bifid.BIFID(table_code, block_size)
+    print_output(cipher, message, encrypt)
+
+
 if __name__ == "__main__":
     app()
