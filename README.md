@@ -13,3 +13,4 @@ An attempted python implementation of all the pre-computer ciphers used througho
 6. Bacon [:link:](https://en.wikipedia.org/wiki/Bacon%27s_cipher)
 7. Beaufort [:link:](https://en.wikipedia.org/wiki/Beaufort_cipher)
 8. Bifid [:link:](https://en.wikipedia.org/wiki/Bifid_cipher)
+9. Caeser [:link:](https://en.wikipedia.org/wiki/Caesar_cipher)
