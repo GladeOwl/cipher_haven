@@ -9,4 +9,5 @@ from cipher_haven.logic import (
     bacon,
     beaufort,
     bifid,
+    caesar,
 )

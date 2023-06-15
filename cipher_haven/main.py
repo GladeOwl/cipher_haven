@@ -28,13 +28,13 @@ def print_output(cipher, message: str, encrypt: bool):
 @app.command()
 def adfgvx(
     message: str = Argument(..., help=MESSAGE_HELP_TEXT),
-    table_code: str = Argument(..., help="Single Word with No Numbers. e.g. wonderful"),
+    table_key: str = Argument(..., help="Single Word with No Numbers. e.g. wonderful"),
     transpose_key: str = Argument(..., help=KEYWORD_HELP_TEXT),
     encrypt: bool = Option(True, ENCRYPT_BOOL, help=ENCRYPT_HELP_TEXT),
 ):
     """Encrypt or Decrypt message using the ADFGVX Cipher"""
 
-    cipher = logic.adfgvx.ADFGVX(transpose_key, table_code)
+    cipher = logic.adfgvx.ADFGVX(transpose_key, table_key)
     print_output(cipher, message, encrypt)
 
 
@@ -115,7 +115,7 @@ def beaufort(
 @app.command()
 def bifid(
     message: str = Argument(..., help=MESSAGE_HELP_TEXT),
-    table_code: str = Argument(..., help="Single Word with No Numbers. e.g. wonderful"),
+    table_key: str = Argument(..., help="Single Word with No Numbers. e.g. wonderful"),
     block_size: int = Argument(
         ...,
         help="Block Size, less than the total message length for best results",
@@ -124,7 +124,20 @@ def bifid(
 ):
     """Encrypt or Decrypt message using the Bifid Cipher"""
 
-    cipher = logic.bifid.BIFID(table_code, block_size)
+    cipher = logic.bifid.BIFID(table_key, block_size)
+    print_output(cipher, message, encrypt)
+
+
+@app.command()
+def caesar(
+    message: str = Argument(..., help=MESSAGE_HELP_TEXT),
+    number: int = Argument(..., help="Shift by how many indexes"),
+    shift: bool = Option(True, "--right/--left", help="Shift Left or Right"),
+    encrypt: bool = Option(True, ENCRYPT_BOOL, help=ENCRYPT_HELP_TEXT),
+):
+    """Encrypt or Decrypt message using the Bifid Cipher"""
+
+    cipher = logic.caesar.CAESAR(shift, number)
     print_output(cipher, message, encrypt)
 
 
