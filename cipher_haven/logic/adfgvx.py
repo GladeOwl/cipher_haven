@@ -63,10 +63,9 @@ class ADFGVX(CIPHER):
         """Encrypt the Message using the ADFGVX Cipher"""
 
         plaintext: str = message.upper().replace(" ", "")
-        letters: list = list(map(str, plaintext))
 
         code_string: str = ""
-        for letter in letters:
+        for letter in plaintext:
             index = numpy.argwhere(self.table == letter)
 
             row = index[0][0]
