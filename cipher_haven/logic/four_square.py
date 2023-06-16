@@ -19,10 +19,10 @@ class FOURSQUARE(CIPHER):
                 "Keys cannot have the letter Q in them. The Cipher doesn't support it."
             )
 
-        # The First and Third tables are just copies of the plaintable
+        # The First and Fourth tables are just copies of the plaintable
         self.plaintable: numpy.ndarray = None
         self.second_table: numpy.ndarray = None
-        self.fourth_table: numpy.ndarray = None
+        self.third_table: numpy.ndarray = None
 
         self.__generate_tables()
 
@@ -36,7 +36,7 @@ class FOURSQUARE(CIPHER):
 
         self.plaintable = q_less_alphabets.reshape(5, 5)
         self.second_table = self.__generate_code(self.key1).reshape(5, 5)
-        self.fourth_table = self.__generate_code(self.key2).reshape(5, 5)
+        self.third_table = self.__generate_code(self.key2).reshape(5, 5)
 
     def encrypt(self, message: str) -> str:
         """Encrypt the Message using the Four-square Cipher"""
@@ -54,10 +54,30 @@ class FOURSQUARE(CIPHER):
             j_index = numpy.argwhere(self.plaintable == j)[0]
 
             first_letter: str = self.second_table[i_index[0], j_index[1]]
-            second_letter: str = self.fourth_table[j_index[0], i_index[1]]
+            second_letter: str = self.third_table[j_index[0], i_index[1]]
             cipher_pairs.append(first_letter + second_letter)
 
         return " ".join(cipher_pairs)
 
     def decrypt(self, encrypted_message: str) -> str:
         """Decrypt the Message using the Four-square Cipher"""
+
+        encrypted_text: str = encrypted_message.upper().replace(" ", "")
+        if len(encrypted_text) % 2 != 0:
+            raise ValueError("Key seems have uneven number of letters. Seems odd.")
+
+        pairs: list = [
+            (encrypted_text[i - 1], encrypted_text[i])
+            for i in range(1, len(encrypted_text), 2)
+        ]
+
+        decrypted_message: str = ""
+        for i, j in pairs:
+            i_index = numpy.argwhere(self.second_table == i)[0]
+            j_index = numpy.argwhere(self.third_table == j)[0]
+
+            first_letter: str = self.plaintable[i_index[0], j_index[1]]
+            second_letter: str = self.plaintable[j_index[0], i_index[1]]
+            decrypted_message += first_letter + second_letter
+
+        return decrypted_message
