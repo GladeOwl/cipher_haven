@@ -9,7 +9,7 @@ app = Typer()
 
 MESSAGE_HELP_TEXT = "The message you wish to encrypt or decrypt"
 ENCRYPT_HELP_TEXT = "--decrypt to Decrypt instead"
-KEYWORD_HELP_TEXT = "Single Word with No Numbers. e.g. apple"
+KEYWORD_HELP_TEXT = "Single Word with No Numbers. e.g. apple, fantastic"
 
 ENCRYPT_BOOL = "--encrypt/--decrypt"
 
@@ -138,6 +138,19 @@ def caesar(
     """Encrypt or Decrypt message using the Bifid Cipher"""
 
     cipher = logic.caesar.CAESAR(shift, number)
+    print_output(cipher, message, encrypt)
+
+
+@app.command()
+def foursquare(
+    message: str = Argument(..., help=MESSAGE_HELP_TEXT),
+    first_keyword: str = Argument(..., help=KEYWORD_HELP_TEXT),
+    second_keyword: str = Argument(..., help=KEYWORD_HELP_TEXT),
+    encrypt: bool = Option(True, ENCRYPT_BOOL, help=ENCRYPT_HELP_TEXT),
+):
+    """Encrypt or Decrypt message using the Four-square Cipher"""
+
+    cipher = logic.four_square.FOURSQUARE(first_keyword, second_keyword)
     print_output(cipher, message, encrypt)
 
 

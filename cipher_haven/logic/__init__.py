@@ -10,4 +10,5 @@ from cipher_haven.logic import (
     beaufort,
     bifid,
     caesar,
+    four_square,
 )
